@@ -71,7 +71,7 @@ class SearchableSpinnerDialog : DialogFragment(), SearchView.OnQueryTextListener
         return alertBuilder.create()
     }
 
-    private var listAdapter: ArrayAdapter<Any?>? = null
+    private var listAdapter: ArrayAdapter<*>? = null
 
     private fun setView(rootView: View?) {
         if (rootView == null) return
