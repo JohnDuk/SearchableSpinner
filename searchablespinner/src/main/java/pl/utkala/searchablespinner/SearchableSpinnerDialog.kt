@@ -35,15 +35,17 @@ class SearchableSpinnerDialog : DialogFragment(), SearchView.OnQueryTextListener
     private var mDismissText: String? = null
     private var mDialogTitle: String? = null
     private var mDismissListener: DialogInterface.OnClickListener? = null
+    private var mCustomAdapter: ArrayAdapter<*>? = null
     lateinit var onSearchableItemClick: OnSearchableItemClick<Any?>
 
     companion object {
         @JvmStatic
         val CLICK_LISTENER = "click_listener"
 
-        fun getInstance(items: MutableList<Any?>): SearchableSpinnerDialog {
+        fun getInstance(items: MutableList<Any?>, customAdapter: ArrayAdapter<*>? = null): SearchableSpinnerDialog {
             val dialog = SearchableSpinnerDialog()
             dialog.items = items
+            dialog.mCustomAdapter = customAdapter
             return dialog
         }
     }
@@ -74,7 +76,7 @@ class SearchableSpinnerDialog : DialogFragment(), SearchView.OnQueryTextListener
     private fun setView(rootView: View?) {
         if (rootView == null) return
 
-        listAdapter = ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, items)
+        listAdapter = mCustomAdapter ?: ArrayAdapter(activity, android.R.layout.simple_spinner_dropdown_item, items)
         mListView = rootView.listView
         mListView?.adapter = listAdapter
         mListView?.isTextFilterEnabled = true
@@ -135,7 +137,4 @@ class SearchableSpinnerDialog : DialogFragment(), SearchView.OnQueryTextListener
         mDialogTitle = dialogTitle
     }
 
-    fun setAdapter(adapter: ArrayAdapter<Any?>) {
-        mListView?.adapter = adapter
-    }
 }

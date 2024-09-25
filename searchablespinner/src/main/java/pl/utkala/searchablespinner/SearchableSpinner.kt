@@ -33,6 +33,7 @@ class SearchableSpinner : Spinner, View.OnTouchListener, OnSearchableItemClick<A
     private val mContext: Context
     private var mDialogTitle: String? = null
     private var mCloseText: String? = null
+    private var mCustomDialogAdapter: ArrayAdapter<*>? = null
     private var mItems: MutableList<Any?> = mutableListOf(null)
 
     constructor(context: Context) : super(context) {
@@ -89,7 +90,7 @@ class SearchableSpinner : Spinner, View.OnTouchListener, OnSearchableItemClick<A
     }
 
     private fun init() {
-        searchDialog = SearchableSpinnerDialog.getInstance(mItems)
+        searchDialog = SearchableSpinnerDialog.getInstance(mItems, customAdapter = mCustomDialogAdapter)
         searchDialog.setTitle(mDialogTitle)
         searchDialog.setDismissText(mCloseText)
         searchDialog.onSearchableItemClick = this
@@ -134,11 +135,16 @@ class SearchableSpinner : Spinner, View.OnTouchListener, OnSearchableItemClick<A
      */
     fun setAdapter(adapter: ArrayAdapter<Any?>) {
         super.setAdapter(adapter)
-        searchDialog.setAdapter(adapter)
     }
 
 
     override fun setOnItemSelectedListener(listener: OnItemSelectedListener?) {
         super.setOnItemSelectedListener(listener)
+    }
+
+    fun <T : ArrayAdapter<*>> setCustomDialogAdapter(adapter: T) {
+        mCustomDialogAdapter = adapter
+        if (searchDialog.isVisible) searchDialog.dismiss()
+        init()
     }
 }
