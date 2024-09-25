@@ -134,6 +134,7 @@ class SearchableSpinner : Spinner, View.OnTouchListener, OnSearchableItemClick<A
      */
     fun setAdapter(adapter: ArrayAdapter<Any?>) {
         super.setAdapter(adapter)
+        searchDialog.setAdapter(adapter)
     }
 
 

@@ -134,4 +134,8 @@ class SearchableSpinnerDialog : DialogFragment(), SearchView.OnQueryTextListener
     fun setTitle(dialogTitle: String?) {
         mDialogTitle = dialogTitle
     }
+
+    fun setAdapter(adapter: ArrayAdapter<Any?>) {
+        mListView?.adapter = adapter
+    }
 }
